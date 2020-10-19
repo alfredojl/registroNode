@@ -64,7 +64,6 @@
       </b-button-group>
     </div>
     </div>
-    <pre>{{ folios }}</pre>
   </div>
 </template>
 
