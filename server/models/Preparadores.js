@@ -11,7 +11,6 @@ let preparadorSchema = new Schema({
     },
     verificador: {
         type: String,
-        required: true
     }
 });
 

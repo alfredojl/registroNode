@@ -15,7 +15,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 ==Expiración de token===
 ======================*/
 // 60 segundos * 60 minutos etc.
-process.env.TOKEN_EXP = '720h';
+process.env.TOKEN_EXP = '1h';
 
 /*======================
 =====SEED del token=====
@@ -29,10 +29,10 @@ process.env.TOKEN_SEED = process.env.TOKEN_SEED || 'development_seed';
 
 let urlDB;
 
-if (process.env.NODE_ENV === 'dev')
-    urlDB = 'mongodb://localhost:27017/registro';
-else
-    urlDB = process.env.MONGO_URI;
+// if (process.env.NODE_ENV === 'dev')
+urlDB = 'mongodb://localhost:27017/registro';
+// else
+// urlDB = process.env.MONGO_URI;
 
 process.env.URLDB = urlDB;
 

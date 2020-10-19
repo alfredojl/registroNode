@@ -12,7 +12,6 @@ let verificadorSchema = new Schema({
     },
     turno: {
         type: String,
-        required: true,
     }
 });
 

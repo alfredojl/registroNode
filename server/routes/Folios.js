@@ -44,7 +44,6 @@ app.get('/folios', async(req, res) => {
 app.post('/folios', async(req, res) => {
     let body = req.body.data;
     let noPaquete = req.body.noPaquete;
-    console.log(noPaquete);
 
     Folio.insertMany(body.folios,
             (err, foliosDB) => {
