@@ -1,163 +1,37 @@
 <template>
-    <!-- <div class="container mt-5">
-        <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6 p-0 d-flex">
-          <b-input-group prepend="Folio inicio" class="">
-            <b-form-input
-              type="number"
-            
-              v-model="folioInicio"
-            ></b-form-input>
-          </b-input-group>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6 p-0 d-flex">
-          <b-input-group prepend="Folio fin" class="">
-            <b-form-input
-              type="number"
-            
-              v-model="folioFin"
-            ></b-form-input>
-          </b-input-group>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6 p-0 d-flex">
-          <b-input-group prepend="Fecha de expediente" class="">
-            <b-form-input
-              type="date"
-            
-              v-model="fechaExpediente"
-            ></b-form-input>
-          </b-input-group>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6 p-0 d-flex">
-          <b-input-group prepend="Número de fojas" class="">
-            <b-form-input
-              type="number"
-            
-              v-model="noFojas"
-            ></b-form-input>
-          </b-input-group>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6 p-0 d-flex">
-          <b-input-group prepend="Fecha de registro" class="">
-            <b-form-input
-              type="text"
-            
-              v-model="fechaAlta"
-            ></b-form-input>
-          </b-input-group>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6 p-0 d-flex">
-          <b-input-group prepend="Estado" class="">
-            <b-form-input type="text" v-model="estado"></b-form-input>
-          </b-input-group>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6 p-0 d-flex">
-          <b-input-group prepend="Validador" class="">
-            <b-form-input
-              type="number"
-            
-              v-model="folioInicio"
-            ></b-form-input>
-          </b-input-group>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6 p-0 d-flex">
-          <b-input-group prepend="Verificador" class="">
-            <b-form-input
-              type="number"
-            
-              v-model="folioInicio"
-            ></b-form-input>
-          </b-input-group>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6 p-0 d-flex">
-          <b-input-group prepend="Preparador" class="">
-            <b-form-input
-              type="number"
-            
-              v-model="folioInicio"
-            ></b-form-input>
-          </b-input-group>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6 p-0 d-flex">
-          <b-input-group prepend="Digitalizador" class="">
-            <b-form-input
-              type="number"
-            
-              v-model="folioInicio"
-            ></b-form-input>
-          </b-input-group>
-        </div>
-        <div class="">
-        <div class="row align-content-between">
-          <div class="beetween">
-            <b-button-group size="sm">
-              <b-button
-                @click="goValidar()"
-                class="col-auto mt-2"
-                variant="outline-success"
-                >Validar</b-button
-              >
-              <b-button class="col-auto mt-2" variant="outline-primary"
-                >Asignar preparador</b-button
-              >
-              <b-button class="col-auto mt-2" variant="outline-primary"
-                >Agregar observaciones</b-button
-              >
-              <b-button class="col-auto mt-2" variant="outline-primary" right
-                >Asignar digitalizador</b-button
-              >
-              <b-button class="col-auto mt-2" variant="outline-danger" right
-                >Eliminar</b-button
-              >
-            </b-button-group>
-          </div>
-        </div>
-      </div>
-      </div>
-    </div> -->
-    <div class="container">
+  <div class="container">
     <div class="row mt-5">
       <div class="col-3"></div>
       <div class="col-6 p-0 d-flex">
         <b-input-group prepend="Paquete" class="mb-5">
-          <b-form-input type="number" v-model="noPaquete"
-          v-on:keyup.enter="search"></b-form-input>
+          <b-form-input
+            type="number"
+            v-model="noPaquete"
+            v-on:keyup.enter="search"
+          ></b-form-input>
+          <b-input-group-prepend>
+            <b-button variant="secondary" @click="search()">Buscar</b-button>
+          </b-input-group-prepend>
         </b-input-group>
       </div>
     </div>
+    <div class="row mt-5" v-if="spinner">
+      <b-spinner
+        variant="dark"
+        class="p-lg-5 m-auto"
+        label="Spinning"
+      ></b-spinner>
+    </div>
+    <div v-else>
     <div class="row mt-5">
       <div class="col-3"></div>
       <div class="col-6 p-0 d-flex">
         <b-input-group prepend="Folio inicio" class="">
-          <b-form-input type="number" v-model="folioInicio" disabled></b-form-input>
+          <b-form-input
+            type="number"
+            v-model="folioInicio"
+            disabled
+          ></b-form-input>
         </b-input-group>
       </div>
     </div>
@@ -165,7 +39,11 @@
       <div class="col-3"></div>
       <div class="col-6 p-0 d-flex">
         <b-input-group prepend="Folio fin" class="">
-          <b-form-input type="number" v-model="folioFin" disabled></b-form-input>
+          <b-form-input
+            type="number"
+            v-model="folioFin"
+            disabled
+          ></b-form-input>
         </b-input-group>
       </div>
     </div>
@@ -173,7 +51,11 @@
       <div class="col-3"></div>
       <div class="col-6 p-0 d-flex">
         <b-input-group prepend="Fecha de expediente" class="">
-          <b-form-input type="date" v-model="fechaExpediente" disabled></b-form-input>
+          <b-form-input
+            type="date"
+            v-model="fechaExpediente"
+            disabled
+          ></b-form-input>
         </b-input-group>
       </div>
     </div>
@@ -190,7 +72,11 @@
       <div class="col-6 p-0 d-flex">
         <b-input-group prepend="Turno" class="">
           <!-- <b-form-input type="number" v-model="turno"></b-form-input> -->
-          <b-form-select v-model="turno" :options="turnos" @change="getEmpleados(turno)"></b-form-select>
+          <b-form-select
+            v-model="turno"
+            :options="turnos"
+            @change="getVerificadores(turno)"
+          ></b-form-select>
         </b-input-group>
       </div>
     </div>
@@ -199,8 +85,13 @@
       <div class="col-6 p-0 d-flex">
         <b-input-group prepend="Verificador" class="">
           <!-- <b-form-input type="number" v-model="verificadores"></b-form-input> -->
-          <b-form-select v-model="verificador" :options="verificadores"
-          :disabled="!turno"
+          <b-form-select
+            v-model="verificador"
+            :options="verificadores"
+            @change="getPreparadores(verificador)"
+            value-field="name"
+            text-field="name"
+            :disabled="!turno"
           ></b-form-select>
         </b-input-group>
       </div>
@@ -210,8 +101,28 @@
       <div class="col-6 p-0 d-flex">
         <b-input-group prepend="Preparador" class="">
           <!-- <b-form-input type="number" v-model="verificadores"></b-form-input> -->
-          <b-form-select v-model="preparador" :options="preparadores"
-          :disabled="!turno"></b-form-select>
+          <b-form-select
+            v-model="preparador"
+            :options="preparadores"
+            value-field="name"
+            text-field="name"
+            :disabled="!verificador"
+          ></b-form-select>
+        </b-input-group>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3"></div>
+      <div class="col-6 p-0 d-flex">
+        <b-input-group prepend="Digitalizador" class="">
+          <!-- <b-form-input type="number" v-model="verificadores"></b-form-input> -->
+          <b-form-select
+            v-model="digitalizador"
+            :options="digitalizadores"
+            value-field="name"
+            text-field="name"
+            :disabled="estado != 'Preparado'"
+          ></b-form-select>
         </b-input-group>
       </div>
     </div>
@@ -219,81 +130,111 @@
       <div class="col-3"></div>
       <div class="col-6 p-0 d-flex">
         <b-input-group prepend="Estado" class="">
-          <!-- <b-form-input type="text" v-model="estado"></b-form-input> -->
-          <b-form-select v-model="estado" :options="estados"
-          value-field="estado"
-          text-field="estado"
+          <b-form-select
+            v-model="estado"
+            :options="estados"
+            value-field="estado"
+            text-field="estado"
           ></b-form-select>
         </b-input-group>
       </div>
     </div>
-      <div class="">
-        <div class="row align-content-between">
-          <div class="col-3"></div>
-          <div class="beetween">
-            <b-button-group size="sm">
-              <b-button
-                @click="save()"
-                class="col-auto mt-2"
-                variant="success"
-                >Asignar</b-button
-              >
-              <!-- <b-button class="col-auto mt-2" variant="outline-primary"
-                >Asignar preparador</b-button
-              >
-              <b-button class="col-auto mt-2" variant="outline-primary"
-                >Agregar observaciones</b-button
-              >
-              <b-button class="col-auto mt-2" variant="outline-primary" right
-                >Asignar digitalizador</b-button
-              >
-              <b-button class="col-auto mt-2" variant="outline-danger" right
-                >Eliminar</b-button
-              > -->
-            </b-button-group>
-          </div>
+    <div class="">
+      <div class="row align-content-between">
+        <div class="col-3"></div>
+        <div class="beetween">
+          <b-button-group size="sm">
+            <b-button @click="save()" class="col-auto mt-2" variant="success"
+              >Asignar</b-button
+            >
+            <b-button variant="info" class="col-auto mt-2" @click="limpiar()">Limpiar</b-button>
+          </b-button-group>
         </div>
       </div>
+    </div>
+    </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-import config from '../config/config';
-import Swal from 'sweetalert2';
+import axios from "axios";
+import config from "../config/config";
+import Swal from "sweetalert2";
 
 export default {
-    data() {
-        return {
-          noPaquete: null,
-          folioInicio: null,
-          folioFin: null,
-          noFojas: null,
-          fechaAlta: null,
-          estado: null,
-          estados: null,
-          fechaExpediente: null,
-          fechaAlta: null,
-          turno: null,
-          verificador: null,
-          verificadores: null,
-          preparador: null,
-          preparadores: null,
-          turnos: [
-            "Matutino",
-            "Vespertino"
-          ],
-        }
+  data() {
+    return {
+      spinner: null,
+      noPaquete: null,
+      folioInicio: null,
+      folioFin: null,
+      noFojas: null,
+      fechaAlta: null,
+      estado: null,
+      estados: null,
+      fechaExpediente: null,
+      fechaAlta: null,
+      turno: null,
+      verificador: null,
+      verificadores: null,
+      preparador: null,
+      preparadores: null,
+      digitalizador: null,
+      digitalizadores: null,
+      turnos: ["Matutino", "Vespertino"],
+    };
+  },
+  created() {
+    this.getEstados();
+  },
+  methods: {
+    limpiar(){
+      this.noFojas = null;
+      this.estado = null;
+      this.folioInicio = null;
+      this.folioFin = null;
+      this.fechaAlta = null;
+      this.fechaExpediente = null;
+      this.preparador = null;
+      this.validador = null;
+      this.verificador = null;
     },
-    created() {
-      this.getEstados();
+    getVerificadores(value) {
+      axios
+        .get(`${config.api}/verificadores`, {
+          params: {
+            turno: value,
+          },
+        })
+        .then((res) => {
+          this.verificadores = res.data.verificadores;
+        })
+        .catch((error) => {
+          if (error) {
+            console.log(error);
+          }
+        });
     },
-    methods: {
-      getEmpleados(value){
-      },
-      getEstados(){
-        axios.get(`${config.api}/estado`)
-        .then(res => {
+    getPreparadores(value) {
+      axios
+        .get(`${config.api}/preparadores`, {
+          params: {
+            verificador: value,
+          },
+        })
+        .then((res) => {
+          this.preparadores = res.data.preparadores;
+        })
+        .catch((error) => {
+          if (error) {
+            console.log(error);
+          }
+        });
+    },
+    getEstados() {
+      axios
+        .get(`${config.api}/estado`)
+        .then((res) => {
           this.estados = res.data.estados;
         })
         .catch((error) => {
@@ -301,10 +242,11 @@ export default {
             console.log(error);
           }
         });
-      },
-      search() {
+    },
+    search() {
+      this.spinner = true;
       if (!this.noPaquete)
-        return Swal.fire("Ingresa un número de paquete", "", "info");
+        return Swal.fire("Ingrese un número de paquete.", "", "info");
       axios
         .get(`${config.api}/paquete`, {
           params: {
@@ -312,17 +254,31 @@ export default {
           },
         })
         .then((res) => {
-          if(!res.data.paquete)
-          return Swal.fire(`No se encontró el paquete ${this.noPaquete}.`, "", "error");
+          if (!res.data.paquete)
+          {
+            return Swal.fire(
+              `No se encontró el paquete ${this.noPaquete}.`,
+              "",
+              "error"
+            )
+            .then(result => {
+              this.spinner = false;
+            })
+          }
           this.folioInicio = res.data.paquete.folioInicio;
           this.folioFin = res.data.paquete.folioFin;
           this.noFojas = res.data.paquete.noFojas;
           this.fechaAlta = res.data.paquete.fechaAlta;
           this.estado = res.data.paquete.estado;
-          this.fechaExpediente =  res.data.paquete.fechaExpediente ? new Date(res.data.paquete.fechaExpediente).toISOString().slice(0, 10) : null;
-          this.fechaAlta = new Date(
-            res.data.paquete.fechaAlta
-          ).toISOString().slice(0, 10);
+          this.fechaExpediente = res.data.paquete.fechaExpediente
+            ? new Date(res.data.paquete.fechaExpediente)
+                .toISOString()
+                .slice(0, 10)
+            : null;
+          this.fechaAlta = new Date(res.data.paquete.fechaAlta)
+            .toISOString()
+            .slice(0, 10);
+            this.spinner = false;
         })
         .catch((error) => {
           if (error) {
@@ -330,29 +286,40 @@ export default {
           }
         });
     },
-    save(){
-      if(!this.noPaquete)
-        return Swal.fire("Ingrese un número de paquete.", "", "info");
-      if(!this.preparador)
+    save() {
+      if (
+        !this.noPaquete
+      )
+        return Swal.fire("Seleccione un paquete.", "", "info");
+      if (!this.preparador)
         return Swal.fire("Seleccione un preparador.", "", "info");
-      Swal.fire({
+      else
+        Swal.fire({
         title: `¿Asignar a ${this.preparador}?`,
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: `Asignar`,
         denyButtonText: `No asignar`,
-        cancelButtonText: 'Cancelar'
+        cancelButtonText: "Cancelar",
       }).then((result) => {
         if (result.isConfirmed) {
-          axios.post();
-          Swal.fire(`Asignado a ${this.preparador}.`, '', 'success')
+          axios.post('/paquete', {
+            verificador: this.verificador,
+            preparador: this.preparador,
+            digitalizador: this.digitalizador,
+            estado: this.estado
+          });
+          Swal.fire(`Asignado a ${this.preparador}.`, "", "success");
         } else if (result.isDenied) {
-          Swal.fire('Paquete sin asignar.', '', 'info')
-      }
-})
-    }
+          Swal.fire("Paquete sin asignar.", "", "info");
+        }
+      });
+      if(this.estado == 'Preparado')
+        if(!this.digitalizador)
+        return Swal.fire("Seleccione un digitalizador.", "", "info");
     },
-}
+  },
+};
 </script>
 
 <style scoped>

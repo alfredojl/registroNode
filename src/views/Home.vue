@@ -6,6 +6,9 @@
         <b-input-group prepend="Paquete" class="mb-5">
           <b-form-input type="number" v-model="noPaquete"
           v-on:keyup.enter="search()"></b-form-input>
+          <b-input-group-prepend>
+            <b-button variant="secondary" @click="search()">Buscar</b-button>
+          </b-input-group-prepend>
         </b-input-group>
       </div>
     </div>
@@ -57,6 +60,22 @@
         </b-input-group>
       </div>
     </div>
+    <div class="row">
+      <div class="col-3"></div>
+      <div class="col-6 p-0 d-flex">
+        <b-input-group prepend="Registrado por" class="">
+          <b-form-input type="text" v-model="registrador" disabled></b-form-input>
+        </b-input-group>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3"></div>
+      <div class="col-6 p-0 d-flex">
+        <b-input-group prepend="Validado por" class="">
+          <b-form-input type="text" v-model="validador" disabled></b-form-input>
+        </b-input-group>
+      </div>
+    </div>
       <div class="">
         <div class="row align-content-between">
           <div class="col-3"></div>
@@ -103,6 +122,8 @@ export default {
       noFojas: null,
       fechaAlta: null,
       estado: null,
+      registrador: null,
+      validador: null
     };
   },
   created() {},
@@ -123,7 +144,11 @@ export default {
           },
         })
         .then((res) => {
+          if(!res.data.paquete)
+            return Swal.fire(`No se encontró el paquete ${this.noPaquete}.`, '', 'error')
           this.folioInicio = res.data.paquete.folioInicio;
+          this.registrador = res.data.paquete.registrado;
+          this.validador = res.data.paquete.validado;
           this.folioFin = res.data.paquete.folioFin;
           this.noFojas = res.data.paquete.noFojas;
           this.fechaAlta = res.data.paquete.fechaAlta;
@@ -140,7 +165,6 @@ export default {
         });
     },
   },
-  // name: 'Home',
 };
 </script>
 
