@@ -6,8 +6,7 @@ import Validar from "../views/Validar.vue";
 import Registrar from "../views/Registrar.vue";
 import Asignar from "../views/Asignar.vue";
 import Capturar from "../views/Capturar.vue";
-import CrearUsuario from "../views/CrearUsuario.vue";
-// import Registrar from '../views/Registrar.vue'
+// import CrearUsuario from "../views/CrearUsuario.vue";
 
 Vue.use(VueRouter);
 
@@ -42,15 +41,15 @@ const routes = [{
             else next(false);
         },
     },
-    {
-        path: "/crearUsuario",
-        name: "CrearUsuario",
-        component: CrearUsuario,
-        beforeEnter: (to, from, next) => {
-            if (isAuthenticated()) next();
-            else next(false);
-        },
-    },
+    // {
+    //     path: "/crearUsuario",
+    //     name: "CrearUsuario",
+    //     component: CrearUsuario,
+    //     beforeEnter: (to, from, next) => {
+    //         if (isAuthenticated()) next();
+    //         else next(false);
+    //     },
+    // },
     {
         path: '/registrar',
         name: 'Registrar',

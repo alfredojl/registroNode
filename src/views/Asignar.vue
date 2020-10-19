@@ -291,8 +291,6 @@ export default {
         !this.noPaquete
       )
         return Swal.fire("Seleccione un paquete.", "", "info");
-      if (!this.preparador)
-        return Swal.fire("Seleccione un preparador.", "", "info");
       else
         Swal.fire({
         title: `¿Asignar a ${this.preparador}?`,
@@ -303,15 +301,20 @@ export default {
         cancelButtonText: "Cancelar",
       }).then((result) => {
         if (result.isConfirmed) {
-          axios.post('/paquete', {
+          axios.put(`${config.api}/paquete`, {
             verificador: this.verificador,
             preparador: this.preparador,
             digitalizador: this.digitalizador,
-            estado: this.estado
-          });
-          Swal.fire(`Asignado a ${this.preparador}.`, "", "success");
-        } else if (result.isDenied) {
-          Swal.fire("Paquete sin asignar.", "", "info");
+            estado: this.estado,
+            noPaquete: this.noPaquete
+          })
+          .then(res => {
+            console.log(res);
+            Swal.fire(`Asignado.`, "", "success");
+          })
+          .catch(err => {
+            console.log(err);
+          })
         }
       });
       if(this.estado == 'Preparado')

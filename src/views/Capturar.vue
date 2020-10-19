@@ -160,6 +160,7 @@ export default {
       estados: null,
       verificador: null,
       preparador: null,
+      preparadores: null,
       turno: null,
       observaciones: null,
       turnos: ["Matutino", "Vespertino"],
@@ -178,6 +179,17 @@ export default {
       this.fechaExpediente = null;
       this.preparador = null;
       this.verificador = null;
+    },
+    getPreparadores(){
+      if(!this.preparador)
+        axios.get(`${config.api}/preparadores`, {
+          verificador: this.verificador
+        })
+        .then((res) => {
+          this.preparadores = res.data.preparadores
+        }).catch((err) => {
+          console.log(err);
+        });
     },
     getEstados() {
       axios
@@ -214,6 +226,7 @@ export default {
         this.validador = res.data.paquete.validador;
         this.preparador = res.data.paquete.preparador;
         this.verificador = res.data.paquete.verificador;
+        this.getPreparadores();
         this.spinner = false
         })
         .catch((error) => {
