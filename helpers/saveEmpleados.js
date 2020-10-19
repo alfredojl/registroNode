@@ -1,85 +1,52 @@
 const Verificador = require('../server/models/Verificadores');
 const Preparadores = require('../server/models/Preparadores');
-const Digitalizadores = require('../server/models/Digitalizadores');
+const Digitalizador = require('../server/models/Digitalizadores');
+const Estado = require('../server/models/Estado');
+const mongoose = require('mongoose');
 
-const vesveri = require('./VesVerificadores.json');
-const vesprepa = require('./VesPreparadores.json');
-const matveri = require('./MatVerificadores.json');
-const matprepa = require('./MatPreparadores.json');
-const digi = require('./Digitalizadores.json');
+require('../server/config/config');
+
+
+
+const verificadores = require('./Verificadores.json');
+const preparadores = require('./Preparadores.json');
+const estados = require('./Estados.json');
+// const digi = require('./Digitalizadores.json');
 
 const install = async() => {
-    let v = await Verificador.insertMany(vesveri);
-    if (!v)
-        throw new Error('Vacío');
-    console.log(v);
-    // let vespertinos = 0;
-    // let matutinos = 0;
-    // let dd = 0;
-    // for (verificador of vesveri) {
-    //     console.log(verificador);
-    //     await Verificadores.create({
-    //             name: verificador,
-    //             turno: 'Vespertino'
-    //         },
-    //         (err, resultado) => {
-    //             console.log('error');
-    //             if (err) {
-    //                 throw new Error(err);
-    //             }
-    //             console.log(resultado);
-    //             vespertinos++;
-    //         });
-    // }
-    // for (verificador of matveri) {
-    //     await Verificadores.create({
-    //         name: verificador,
-    //         turno: 'Matutino'
-    //     }, (err, resultado) => {
-    //         if (err)
-    //             throw new Error(err);
-    //         console.log(resultado);
-    //         matutinos++;
-    //     });
-    // }
-    // for (preparador of vesprepa) {
-    //     await Preparadores.create({
-    //         name: preparador,
-    //         turno: 'Matutino'
-    //     }, (err, resultado) => {
-    //         if (err)
-    //             throw new Error(err);
-    //         console.log(resultado);
-    //         vespertinos++;
-    //     });
-    // }
-    // for (preparador of matprepa) {
-    //     await Preparadores.create({
-    //         name: preparador,
-    //         turno: 'Matutino'
-    //     }, (err, resultado) => {
-    //         if (err)
-    //             throw new Error(err);
-    //         console.log(resultado);
-    //         matutinos++;
-    //     });
-    // }
-    // for (digitalizador of digi) {
-    //     console.log('fi');
-    //     Digitalizadores.create({
-    //         name: digitalizador
-    //     }, (err, resultado) => {
-    //         console.log('foo');
-    //         if (err)
-    //             throw new Error(err);
-    //         console.log(resultado);
-    //         dd++;
-    //     });
-    // }
-    // console.log('Vespertinos: ', vespertinos);
-    // console.log('Matutinos: ', matutinos);
-    // console.log('Digitalizadores: ', dd);
+    mongoose.connect('mongodb://localhost:27017/registro', {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: false
+    }, (err, res) => {
+        if (err) throw err;
+        console.log("BD ONLINE");
+    });
+    // console.log(preparadores);
+    await Preparadores.insertMany(preparadores)
+        .then(preparadoresDB => {
+            console.log("Preparadores añadidos correctamente.");
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    await Verificador.insertMany(verificadores)
+        .then(VerificadoresDB => {
+            console.log("Verificadores añadidos correctamente.");
+        })
+        .catch(err => {
+            console.log(err);
+        })
 
+    await Estado.insertMany(estados)
+        .then(estadosDB => {
+            console.log('Estados agregados correctamente.');
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    process.exit();
 };
 
 install();
