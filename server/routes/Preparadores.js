@@ -4,32 +4,23 @@ const app = express();
 const Preparador = require('../models/Preparadores');
 const Verificador = require('../models/Verificadores');
 
-app.get('/preparador', (req, res) => {
-    let name = req.query.name;
-    Preparador.findOne({ name }, (err, preparadorDB) => {
+app.get('/preparadores', (req, res) => {
+    let verificador = req.query.verificador;
+    Preparador.find({ verificador }, (err, preparadorDB) => {
         if (err) {
             return res.status(500).json({
                 ok: false,
                 err
             })
         }
-        Verificador.populate(preparadorDB, { path: "verificador" }, (err, resultado) => {
-            if (err)
-                return res.status(500).json({
-                    ok: false,
-                    err
-                });
-
-            res.json({
-                ok: true,
-                resultado
-            })
-        })
+        res.json({
+            ok: true,
+            preparadores: preparadorDB
+        });
     })
-
 });
 
-app.post('/preparador', async(req, res) => {
+app.post('/preparadores', async(req, res) => {
     let name = req.body.name
     let ver = req.body.vname
 
@@ -68,7 +59,7 @@ app.post('/preparador', async(req, res) => {
     });
 });
 
-app.put('/preparador', (req, res) => {
+app.put('/preparadores', (req, res) => {
     let oldName = req.body.oldName;
     let newName = req.body.newName;
     Preparador.findOneAndUpdate({ name: oldName }, { name: newName }, { new: true }, (err, preparadorDB) => {
@@ -86,7 +77,7 @@ app.put('/preparador', (req, res) => {
     })
 });
 
-app.delete('/preparador', (req, res) => {
+app.delete('/preparadores', (req, res) => {
     let name = req.body.name
 
     Preparador.findOneAndDelete({ name }, (err, preparadorDB) => {

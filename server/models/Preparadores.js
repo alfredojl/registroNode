@@ -9,7 +9,7 @@ let preparadorSchema = new Schema({
         type: String,
         required: [true, 'El nombre es necesario.'],
     },
-    turno: {
+    verificador: {
         type: String,
         required: true
     }

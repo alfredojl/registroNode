@@ -8,5 +8,6 @@ app.use(require('./Paquetes'));
 app.use(require('./Preparadores'));
 app.use(require('./Digitalizadores'));
 app.use(require('./Estados'));
+app.use(require('./Verificadores'));
 
 module.exports = app;

@@ -36,7 +36,7 @@ let paqueteSchema = new Schema({
     fechaAlta: {
         type: Date
     },
-    recepcion: {
+    registrado: {
         type: String
     },
     validacion: {

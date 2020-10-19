@@ -21,18 +21,23 @@ app.get('/paquete', (req, res) => {
 });
 
 app.post('/paquete', (req, res) => {
-    let body = req.body;
+    let body = req.body.data;
+    console.log(body);
 
+    // let fechaAlta = new Date('Aug 9, 1995');
     let paquetito = new Paquete({
         noPaquete: body.noPaquete,
         folioFin: body.folioFin,
         folioInicio: body.folioInicio,
-        fechaExpediente: body.fechaExpediente
+        fechaExpediente: body.fechaExpediente,
+        fechaAlta: body.fechaAlta,
+        registrado: body.registrado
     });
 
     paquetito.save((err, paqueteDB) => {
         if (err) {
-            res.status(500).json({
+            console.log(err);
+            return res.status(500).json({
                 ok: false,
                 err
             });
