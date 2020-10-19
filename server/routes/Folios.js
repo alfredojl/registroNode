@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 const Folio = require('../models/Folios');
-const Estado = require('../models/Estado');
+const Paquete = require('../models/Paquetes');
 
 app.get('/folios', async(req, res) => {
     let folioInicio = req.query.folioInicio;
@@ -42,47 +42,60 @@ app.get('/folios', async(req, res) => {
 })
 
 app.post('/folios', async(req, res) => {
-    let body = req.body.data
+    let body = req.body.data;
+    let noPaquete = req.body.noPaquete;
+    console.log(noPaquete);
 
     Folio.insertMany(body.folios,
-        (err, foliosDB) => {
-            if (err) {
-                console.log(err);
-                return res.status(500).json({
-                    ok: false,
-                    err
+            (err, foliosDB) => {
+                if (err) {
+                    console.log(err);
+                    return res.status(500).json({
+                        ok: false,
+                        err
+                    })
+                }
+                res.json({
+                    ok: true,
+                    folios: foliosDB
                 })
-            }
-            res.json({
-                ok: true,
-                folios: foliosDB
-            })
 
-        })
+            })
+        // Paquete.updateOne()
 })
 
 app.put('/folios', async(req, res) => {
     let folios = req.body.data.folios;
-    let noPaquete = req.body.noPaquete;
+    let noPaquete = folios[0]['noPaquete'];
     let foliosResultado = [];
     let enes = [];
 
-    for (bodi of folios) {
-        console.log(bodi.folio);
-        console.log(bodi.validado);
-        var n = await Folio.findOneAndUpdate({ folio: bodi.folio }, bodi, (err, folioDB) => {
-            if (err) {
-                return res.status(500).json({
-                    ok: false,
-                    err
-                })
-            }
+    console.log(noPaquete);
 
-            foliosResultado.push(folioDB);
-        })
-        enes.push(n);
+    for (bodi of folios) {
+        var n = Folio.findOneAndUpdate({ folio: bodi.folio }, bodi, (err, folioDB) => {
+                if (err) {
+                    return res.status(500).json({
+                        ok: false,
+                        err
+                    })
+                }
+                // console.log(n);
+                // foliosResultado.push(folioDB);
+            })
+            // enes.push(n);
     }
-    console.log(n);
+    // console.log(n);
+
+    Paquete.findOneAndUpdate({ noPaquete }, { validado: folios[0]['validado'] }, (err, paqueteDB) => {
+        if (err) {
+            console.log(err);
+            return res.status(500).json({
+                ok: false,
+                err
+            })
+        }
+    })
 
     res.json({
         ok: true,
