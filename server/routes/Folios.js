@@ -8,10 +8,32 @@ app.get('/folios', async(req, res) => {
     let folioInicio = req.query.folioInicio;
     let folioFin = req.query.folioFin || folioInicio;
 
+    let noPaquete = req.query.noPaquete;
 
-    let folios = await Folio.find({
-        folio: { $gte: folioInicio, $lte: folioFin }
-    });
+
+    if (folioInicio) {
+        var folios = await Folio.find({
+                folio: { $gte: folioInicio, $lte: folioFin }
+            })
+            .catch(err => {
+                console.log(err);
+                return res.status(500).json({
+                    ok: false,
+                    err
+                })
+            })
+    } else {
+        var folios = await Folio.find({
+                noPaquete
+            })
+            .catch(err => {
+                console.log(err);
+                return res.status(500).json({
+                    ok: false,
+                    err
+                })
+            })
+    }
 
     res.json({
         ok: true,
@@ -20,30 +42,53 @@ app.get('/folios', async(req, res) => {
 })
 
 app.post('/folios', async(req, res) => {
-    let body = req.body
+    let body = req.body.data
 
-    let estado = await Estado.findOne({
-        estado: body.estado
-    });
-
-    Folio.create({
-        folio: body.folio,
-        tomos: body.tomos,
-        oficios: body.oficios,
-        referencias: body.referencias,
-        estado
-    }, (err, folioDB) => {
-        if (err) {
-            return res.status(500).json({
-                ok: false,
-                err
+    Folio.insertMany(body.folios,
+        (err, foliosDB) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({
+                    ok: false,
+                    err
+                })
+            }
+            res.json({
+                ok: true,
+                folios: foliosDB
             })
-        }
-        return res.json({
-            ok: true,
-            folio: folioDB
+
         })
+})
+
+app.put('/folios', async(req, res) => {
+    let folios = req.body.data.folios;
+    let noPaquete = req.body.noPaquete;
+    let foliosResultado = [];
+    let enes = [];
+
+    for (bodi of folios) {
+        console.log(bodi.folio);
+        console.log(bodi.validado);
+        var n = await Folio.findOneAndUpdate({ folio: bodi.folio }, bodi, (err, folioDB) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    err
+                })
+            }
+
+            foliosResultado.push(folioDB);
+        })
+        enes.push(n);
+    }
+    console.log(n);
+
+    res.json({
+        ok: true,
+        foliosResultado
     })
+
 })
 
 module.exports = app;

@@ -39,13 +39,20 @@ let paqueteSchema = new Schema({
     registrado: {
         type: String
     },
-    validacion: {
+    validado: {
         type: String
     },
     sellado: {
         type: String
     },
     cosido: {
+        type: String
+    },
+    estado: {
+        type: String,
+        default: 'Recibido'
+    },
+    observaciones: {
         type: String
     }
 });

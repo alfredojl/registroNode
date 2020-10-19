@@ -13,19 +13,16 @@ let foliosSchema = new Schema({
     tomos: {
         type: Number
     },
-    oficios: {
-        type: String
-    },
     referencias: {
         type: String
     },
     estado: {
-        type: Schema.ObjectId,
-        ref: "Estado"
+        type: String,
+        default: 'Completo'
     },
     noPaquete: {
-        type: Schema.ObjectId,
-        ref: "Paquete"
+        type: Number,
+        required: true
     }
 });
 

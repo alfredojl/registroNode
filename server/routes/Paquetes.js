@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 
 const Paquete = require('../models/Paquetes');
+const Folio = require('../models/Folios');
 
 app.get('/paquete', (req, res) => {
     let noPaquete = req.query.noPaquete;
@@ -22,16 +23,15 @@ app.get('/paquete', (req, res) => {
 
 app.post('/paquete', (req, res) => {
     let body = req.body.data;
-    console.log(body);
 
-    // let fechaAlta = new Date('Aug 9, 1995');
     let paquetito = new Paquete({
         noPaquete: body.noPaquete,
         folioFin: body.folioFin,
         folioInicio: body.folioInicio,
         fechaExpediente: body.fechaExpediente,
         fechaAlta: body.fechaAlta,
-        registrado: body.registrado
+        registrado: body.registrado,
+        validado: body.validado
     });
 
     paquetito.save((err, paqueteDB) => {
@@ -42,10 +42,29 @@ app.post('/paquete', (req, res) => {
                 err
             });
         }
-        return res.json({
-            ok: true,
-            paquete: paqueteDB
-        })
+        let folios = [];
+        for (let i = body.folioInicio; i <= body.folioFin; i++) {
+            let folio = {
+                folio: i,
+                noPaquete: body.noPaquete
+            }
+            folios.push(folio);
+        };
+
+        Folio.insertMany(folios, (err, resultado) => {
+            if (err) {
+                Paquete.remove({ noPaquete: body.noPaquete });
+                console.log(err);
+                return res.status(500).json({
+                    ok: false,
+                    err
+                });
+            }
+            return res.json({
+                ok: true,
+                paquete: paqueteDB
+            })
+        });
     })
 })
 
