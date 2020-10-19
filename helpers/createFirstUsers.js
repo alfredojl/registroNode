@@ -1,13 +1,13 @@
 const Usuario = require('../server/models/user');
 const bcrypt = require('bcrypt');
 
-const crearUsuario = () => {
+const crearUsuario = async() => {
     const name = "admin";
-    const passwd = "root";
+    const passwdprov = "root";
 
-    bcrypt.hashSync(passwd, 10);
+    const passwd = bcrypt.hashSync(passwdprov, 10);
 
-    Usuario.create({
+    await Usuario.create({
         name,
         passwd
     }, (err, usuarioDB) => {

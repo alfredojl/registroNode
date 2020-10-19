@@ -51,6 +51,8 @@ app.post('/user', (req, res) => {
     let name = req.body.name
     let passwd = bcrypt.hashSync(req.body.passwd, 10);
 
+    console.log(req.body);
+
     Usuario.create({
         name,
         passwd
