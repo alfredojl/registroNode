@@ -11,7 +11,7 @@ require('../server/config/config');
 const verificadores = require('./Verificadores.json');
 const preparadores = require('./Preparadores.json');
 const estados = require('./Estados.json');
-// const digi = require('./Digitalizadores.json');
+const digitalizadores = require('./Digitalizadores.json');
 
 const install = async() => {
     mongoose.connect('mongodb://localhost:27017/registro', {
@@ -42,6 +42,14 @@ const install = async() => {
     await Estado.insertMany(estados)
         .then(estadosDB => {
             console.log('Estados agregados correctamente.');
+        })
+        .catch(err => {
+            console.log(err);
+        })
+
+    await Digitalizador.insertMany(digitalizadores)
+        .then(digitalizadoresDB => {
+            console.log('Digitalizadores agregados correctamente.');
         })
         .catch(err => {
             console.log(err);
