@@ -119,7 +119,6 @@
             :options="digitalizadores"
             value-field="name"
             text-field="name"
-            :disabled="estado != 'Preparado'"
           ></b-form-select>
         </b-input-group>
       </div>
@@ -146,7 +145,7 @@
               >Asignar</b-button
             >
             <b-button variant="info" class="col-auto mt-2" @click="limpiar()">Limpiar</b-button>
-            <b-button class="col-auto mt-3 mb-5" variant="outline-secondary" @click="goFormato()" right
+            <b-button class="col-auto mt-2" variant="outline-secondary" @click="goFormato()" right
               >Formato</b-button
             >
           </b-button-group>
@@ -191,6 +190,7 @@ export default {
     this.search();
     this.getVerificadores();
     this.getPreparadores();
+    this.getDigitalizadores();
   },
   methods: {
     goFormato(){
@@ -240,6 +240,12 @@ export default {
             console.log(error);
           }
         });
+    },
+    getDigitalizadores(){
+      axios.get(`${config.api}/digitalizador`)
+      .then(res => {
+        this.digitalizadores = res.data.digitalizadores;
+      })
     },
     getEstados() {
       axios
@@ -332,7 +338,6 @@ export default {
         }
       });
       if(this.estado == 'Preparado')
-        if(!this.digitalizador)
         return Swal.fire("Seleccione un digitalizador.", "", "info");
     },
   },

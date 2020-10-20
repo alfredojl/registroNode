@@ -173,7 +173,8 @@ export default {
     },
     created() {
         let date = new Date();
-        this.fechaToday = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+        let mes = date.getMonth() + 1;
+        this.fechaToday = date.getDate() + '/' + mes + '/' + date.getFullYear();
         this.search();
     },
     methods: {
