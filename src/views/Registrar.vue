@@ -42,6 +42,12 @@
       <b-button variant="success"
       @click="save()"
       >Añadir</b-button>
+      <b-button
+              @click="goValidar()"
+              class="col-auto"
+              variant="outline-success"
+              >Validar</b-button
+            >
       <b-button variant="info"
       @click="limpiar()"
       >Limpiar</b-button>
@@ -59,6 +65,7 @@ export default {
     data() {
         return {
             noPaquete: null,
+            digitalizador: null,
             paquete: null,
             folioInicio: null,
             folioFin: null,
@@ -71,11 +78,19 @@ export default {
     created() {
     },
     methods: {
+      goValidar() {
+      localStorage.setItem("noPaquete", this.noPaquete);
+      localStorage.setItem("folioInicio", this.folioInicio);
+      localStorage.setItem("folioFin", this.folioFin);
+      localStorage.setItem("fechaExpediente", this.fechaExpediente);
+      this.$router.push("/validar");
+    },
       limpiar(){
         this.noPaquete = null;
         this.folioInicio = null;
         this.folioFin = null;
         this.fechaExpediente = null;
+        this.digitalizador = null;
       },
         save(){
           if(!this.noPaquete || !this.folioInicio || !this.folioFin || !this.fechaExpediente)
@@ -85,6 +100,7 @@ export default {
             noPaquete: this.noPaquete,
             folioInicio: this.folioInicio,
             folioFin: this.folioFin,
+            digitalizador: this.digitalizador,
             fechaExpediente: this.fechaExpediente,
             fechaAlta,
             registrado: localStorage.loggedIn

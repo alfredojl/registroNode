@@ -60,7 +60,7 @@
       <div class="col-2"></div>
       <b-button-group>
         <b-button variant="success" @click="save()">Guardar</b-button>
-        <b-button variant="info" to="asignar">Asignar</b-button>
+        <b-button variant="info" @click="goAsignar()">Asignar</b-button>
       </b-button-group>
     </div>
     </div>
@@ -95,6 +95,10 @@ export default {
         this.getFolios();
     },
     methods: {
+      goAsignar() {
+      localStorage.setItem("noPaquete", this.noPaquete);
+      this.$router.push("/asignar");
+    },
       search(){
         this.spinner = true;
         localStorage.noPaquete = this.noPaquete;

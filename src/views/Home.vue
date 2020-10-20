@@ -114,6 +114,18 @@
     <div class="row">
       <div class="col-3"></div>
       <div class="col-6 p-0 d-flex">
+        <b-input-group prepend="Digitalizador" class="">
+          <b-form-input
+            type="text"
+            disabled
+            v-model="digitalizador"
+          ></b-form-input>
+        </b-input-group>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3"></div>
+      <div class="col-6 p-0 d-flex">
         <b-input-group prepend="Número de fojas" class="">
           <b-form-input type="number" v-model="noFojas" disabled></b-form-input>
         </b-input-group>
@@ -189,6 +201,7 @@ export default {
       preparador: null,
       observaciones: null,
       verificador: null,
+      digitalizador: null
     };
   },
   created() {},
@@ -237,6 +250,7 @@ export default {
           this.verificador = res.data.paquete.verificador;
           this.observaciones = res.data.paquete.observaciones;
           this.preparador = res.data.paquete.preparador;
+          this.digitalizador = res.data.paquete.digitalizador;
           this.fechaExpediente = res.data.paquete.fechaExpediente
             ? new Date(res.data.paquete.fechaExpediente)
                 .toISOString()
