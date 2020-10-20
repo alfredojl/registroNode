@@ -6,8 +6,8 @@ const Digitalizador = require('../models/Digitalizadores');
 app.get('/digitalizador', async(req, res) => {
     let name = req.query.name;
 
-    await Digitalizador.findOne({ name })
-        .exec((err, digitalizadorDB) => {
+    await Digitalizador.find({})
+        .exec((err, digitalizadoresDB) => {
             if (err)
                 return res.status(500).json({
                     ok: false,
@@ -15,7 +15,7 @@ app.get('/digitalizador', async(req, res) => {
                 })
             res.json({
                 ok: true,
-                digitalizadorDB
+                digitalizadores: digitalizadoresDB
             })
         })
 
