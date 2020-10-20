@@ -5,8 +5,11 @@ const Preparador = require('../models/Preparadores');
 const Verificador = require('../models/Verificadores');
 
 app.get('/preparadores', (req, res) => {
-    let verificador = req.query.verificador;
-    Preparador.find({ verificador }, (err, preparadorDB) => {
+    Preparador.find({}, {}, {
+        sort: {
+            name: 1
+        }
+    }, (err, preparadorDB) => {
         if (err) {
             return res.status(500).json({
                 ok: false,

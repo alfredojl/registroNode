@@ -20,6 +20,9 @@ let paqueteSchema = new Schema({
         required: true,
         unique: true
     },
+    turno: {
+        type: String,
+    },
     preparador: {
         type: String
     },

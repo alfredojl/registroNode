@@ -8,7 +8,11 @@ app.get('/verificadores', (req, res) => {
     // res.json({ verificadores: req.query })
     let turno = req.query.turno;
 
-    Verificador.find({ turno }, (err, verificadoresDB) => {
+    Verificador.find({}, {}, {
+        sort: {
+            name: 1
+        }
+    }, (err, verificadoresDB) => {
         if (err)
             return res.status(500).json({
                 ok: false,
