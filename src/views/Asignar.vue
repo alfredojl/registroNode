@@ -75,7 +75,6 @@
           <b-form-select
             v-model="turno"
             :options="turnos"
-            @change="getVerificadores(turno)"
           ></b-form-select>
         </b-input-group>
       </div>
@@ -88,7 +87,6 @@
           <b-form-select
             v-model="verificador"
             :options="verificadores"
-            @change="getPreparadores(verificador)"
             value-field="name"
             text-field="name"
             :disabled="!turno"
@@ -186,6 +184,10 @@ export default {
   },
   created() {
     this.getEstados();
+    this.noPaquete = localStorage.noPaquete;
+    this.search();
+    this.getVerificadores();
+    this.getPreparadores();
   },
   methods: {
     limpiar(){
@@ -198,6 +200,7 @@ export default {
       this.preparador = null;
       this.validador = null;
       this.verificador = null;
+      this.turno = null;
     },
     getVerificadores(value) {
       axios
@@ -270,6 +273,10 @@ export default {
           this.noFojas = res.data.paquete.noFojas;
           this.fechaAlta = res.data.paquete.fechaAlta;
           this.estado = res.data.paquete.estado;
+          this.turno = res.data.paquete.turno;
+          this.verificador = res.data.paquete.verificador;
+          this.preparador = res.data.paquete.preparador;
+          this.digitalizador = res.data.paquete.digitalizador;
           this.fechaExpediente = res.data.paquete.fechaExpediente
             ? new Date(res.data.paquete.fechaExpediente)
                 .toISOString()
@@ -306,10 +313,10 @@ export default {
             preparador: this.preparador,
             digitalizador: this.digitalizador,
             estado: this.estado,
+            turno: this.turno,
             noPaquete: this.noPaquete
           })
           .then(res => {
-            console.log(res);
             Swal.fire(`Asignado.`, "", "success");
           })
           .catch(err => {

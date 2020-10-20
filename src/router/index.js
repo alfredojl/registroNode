@@ -6,6 +6,7 @@ import Validar from "../views/Validar.vue";
 import Registrar from "../views/Registrar.vue";
 import Asignar from "../views/Asignar.vue";
 import Capturar from "../views/Capturar.vue";
+import Formato from "../views/Formato.vue";
 // import CrearUsuario from "../views/CrearUsuario.vue";
 
 Vue.use(VueRouter);
@@ -63,6 +64,15 @@ const routes = [{
         path: '/asignar',
         name: 'Asignar',
         component: Asignar,
+        beforeEnter: (to, from, next) => {
+            if (isAuthenticated()) next();
+            else next(false);
+        },
+    },
+    {
+        path: '/formato',
+        name: 'Formato',
+        component: Formato,
         beforeEnter: (to, from, next) => {
             if (isAuthenticated()) next();
             else next(false);

@@ -4,8 +4,11 @@
       <div class="col-3"></div>
       <div class="col-6 p-0 d-flex">
         <b-input-group prepend="Paquete" class="mb-5">
-          <b-form-input type="number" v-model="noPaquete"
-          v-on:keyup.enter="search()"></b-form-input>
+          <b-form-input
+            type="number"
+            v-model="noPaquete"
+            v-on:keyup.enter="search()"
+          ></b-form-input>
           <b-input-group-prepend>
             <b-button variant="secondary" @click="search()">Buscar</b-button>
           </b-input-group-prepend>
@@ -16,7 +19,11 @@
       <div class="col-3"></div>
       <div class="col-6 p-0 d-flex">
         <b-input-group prepend="Folio inicio" class="">
-          <b-form-input type="number" v-model="folioInicio" disabled></b-form-input>
+          <b-form-input
+            type="number"
+            v-model="folioInicio"
+            disabled
+          ></b-form-input>
         </b-input-group>
       </div>
     </div>
@@ -24,7 +31,11 @@
       <div class="col-3"></div>
       <div class="col-6 p-0 d-flex">
         <b-input-group prepend="Folio fin" class="">
-          <b-form-input type="number" v-model="folioFin" disabled></b-form-input>
+          <b-form-input
+            type="number"
+            v-model="folioFin"
+            disabled
+          ></b-form-input>
         </b-input-group>
       </div>
     </div>
@@ -32,15 +43,11 @@
       <div class="col-3"></div>
       <div class="col-6 p-0 d-flex">
         <b-input-group prepend="Fecha de expediente" class="">
-          <b-form-input type="date" v-model="fechaExpediente" disabled></b-form-input>
-        </b-input-group>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-3"></div>
-      <div class="col-6 p-0 d-flex">
-        <b-input-group prepend="Número de fojas" class="">
-          <b-form-input type="number" v-model="noFojas" disabled></b-form-input>
+          <b-form-input
+            type="date"
+            v-model="fechaExpediente"
+            disabled
+          ></b-form-input>
         </b-input-group>
       </div>
     </div>
@@ -64,7 +71,11 @@
       <div class="col-3"></div>
       <div class="col-6 p-0 d-flex">
         <b-input-group prepend="Registrado por" class="">
-          <b-form-input type="text" v-model="registrador" disabled></b-form-input>
+          <b-form-input
+            type="text"
+            v-model="registrador"
+            disabled
+          ></b-form-input>
         </b-input-group>
       </div>
     </div>
@@ -76,33 +87,84 @@
         </b-input-group>
       </div>
     </div>
-      <div class="">
-        <div class="row align-content-between">
-          <div class="col-3"></div>
-          <div class="beetween">
-            <b-button-group size="sm">
-              <b-button
-                @click="goValidar()"
-                class="col-auto mt-2"
-                variant="outline-success"
-                >Validar</b-button
-              >
-              <b-button class="col-auto mt-2" variant="outline-primary"
-                >Asignar preparador</b-button
-              >
-              <b-button class="col-auto mt-2" variant="outline-primary"
-                >Agregar observaciones</b-button
-              >
-              <b-button class="col-auto mt-2" variant="outline-primary" right
-                >Asignar digitalizador</b-button
-              >
-              <b-button class="col-auto mt-2" variant="outline-danger" right
-                >Eliminar</b-button
-              >
-            </b-button-group>
-          </div>
+    <div class="row">
+      <div class="col-3"></div>
+      <div class="col-6 p-0 d-flex">
+        <b-input-group prepend="Verificador" class="">
+          <b-form-input
+            type="text"
+            v-model="verificador"
+            disabled
+          ></b-form-input>
+        </b-input-group>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3"></div>
+      <div class="col-6 p-0 d-flex">
+        <b-input-group prepend="Preparador" class="">
+          <b-form-input
+            type="text"
+            disabled
+            v-model="preparador"
+          ></b-form-input>
+        </b-input-group>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3"></div>
+      <div class="col-6 p-0 d-flex">
+        <b-input-group prepend="Número de fojas" class="">
+          <b-form-input type="number" v-model="noFojas" disabled></b-form-input>
+        </b-input-group>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3"></div>
+      <b-form-textarea
+        id="textarea-small"
+        size=""
+        class="col-6 d-flex"
+        v-model="observaciones"
+      ></b-form-textarea>
+    </div>
+    <div class="">
+      <div class="row align-content-between">
+        <div class="col-3"></div>
+        <div class="beetween">
+          <b-button-group size="sm">
+            <b-button
+              @click="goValidar()"
+              class="col-auto mt-3 mb-5"
+              variant="outline-success"
+              >Validar</b-button
+            >
+            <b-button
+              class="col-auto mt-3 mb-5"
+              variant="outline-primary"
+              @click="goAsignar()"
+              >Asignar preparador</b-button
+            >
+            <b-button
+              class="col-auto mt-3 mb-5"
+              variant="outline-primary"
+              @click="goCapturar()"
+              >Agregar observaciones</b-button
+            >
+            <b-button
+              class="col-auto mt-3 mb-5"
+              variant="outline-primary"
+              right
+              @click="goAsignar()"
+              >Asignar digitalizador</b-button
+            >
+            <b-button class="col-auto mt-3 mb-5" variant="outline-danger" right
+              >Eliminar</b-button
+            >
+          </b-button-group>
         </div>
       </div>
+    </div>
   </div>
 </template>
 
@@ -123,11 +185,22 @@ export default {
       fechaAlta: null,
       estado: null,
       registrador: null,
-      validador: null
+      validador: null,
+      preparador: null,
+      observaciones: null,
+      verificador: null,
     };
   },
   created() {},
   methods: {
+    goCapturar() {
+      localStorage.setItem("noPaquete", this.noPaquete);
+      this.$router.push("/capturar");
+    },
+    goAsignar() {
+      localStorage.setItem("noPaquete", this.noPaquete);
+      this.$router.push("/asignar");
+    },
     goValidar() {
       localStorage.setItem("folioInicio", this.folioInicio);
       localStorage.setItem("folioFin", this.folioFin);
@@ -144,8 +217,12 @@ export default {
           },
         })
         .then((res) => {
-          if(!res.data.paquete)
-            return Swal.fire(`No se encontró el paquete ${this.noPaquete}.`, '', 'error')
+          if (!res.data.paquete)
+            return Swal.fire(
+              `No se encontró el paquete ${this.noPaquete}.`,
+              "",
+              "error"
+            );
           this.folioInicio = res.data.paquete.folioInicio;
           this.registrador = res.data.paquete.registrado;
           this.validador = res.data.paquete.validado;
@@ -153,10 +230,17 @@ export default {
           this.noFojas = res.data.paquete.noFojas;
           this.fechaAlta = res.data.paquete.fechaAlta;
           this.estado = res.data.paquete.estado;
-          this.fechaExpediente =  res.data.paquete.fechaExpediente ? new Date(res.data.paquete.fechaExpediente).toISOString().slice(0, 10) : null;
-          this.fechaAlta = new Date(
-            res.data.paquete.fechaAlta
-          ).toISOString().slice(0, 10);
+          this.verificador = res.data.paquete.verificador;
+          this.observaciones = res.data.paquete.observaciones;
+          this.preparador = res.data.paquete.preparador;
+          this.fechaExpediente = res.data.paquete.fechaExpediente
+            ? new Date(res.data.paquete.fechaExpediente)
+                .toISOString()
+                .slice(0, 10)
+            : null;
+          this.fechaAlta = new Date(res.data.paquete.fechaAlta)
+            .toISOString()
+            .slice(0, 10);
         })
         .catch((error) => {
           if (error) {

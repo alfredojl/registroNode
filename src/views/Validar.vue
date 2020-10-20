@@ -60,7 +60,7 @@
       <div class="col-2"></div>
       <b-button-group>
         <b-button variant="success" @click="save()">Guardar</b-button>
-        <!-- <b-button variant="info" @click="limpiar()">Limpiar</b-button> -->
+        <b-button variant="info" to="asignar">Asignar</b-button>
       </b-button-group>
     </div>
     </div>
