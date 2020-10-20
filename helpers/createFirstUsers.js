@@ -17,17 +17,22 @@ mongoose.connect('mongodb://localhost:27017/registro', {
 });
 
 const crearUsuario = async() => {
-    const name = "root";
-    const passwdprov = "admin";
+    // const name = "root";
+    // const passwdprov = "admin";
 
-    const passwd = bcrypt.hashSync(passwdprov, 10);
+    const usuarios = [{
+            name: "fernanda",
+            passwd: bcrypt.hashSync('123456789', 10)
+        },
+        {
+            name: "maria jose",
+            passwd: bcrypt.hashSync('220296', 10)
+        }
+    ]
 
-    await Usuario.create({
-            name: name,
-            passwd: passwd
-        })
+    await Usuario.insertMany(usuarios)
         .then(usuarioDB => {
-            console.log('Usuario "root" creado con éxito.');
+            console.log('Usuarios creados con éxito.');
         })
         .catch(err => {
             console.log(err);
