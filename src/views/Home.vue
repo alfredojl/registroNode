@@ -158,8 +158,8 @@
               @click="goAsignar()"
               >Asignar digitalizador</b-button
             >
-            <b-button class="col-auto mt-3 mb-5" variant="outline-danger" right
-              >Eliminar</b-button
+            <b-button class="col-auto mt-3 mb-5" variant="outline-secondary" @click="goFormato()" right
+              >Formato</b-button
             >
           </b-button-group>
         </div>
@@ -193,6 +193,10 @@ export default {
   },
   created() {},
   methods: {
+    goFormato(){
+      localStorage.setItem("noPaquete", this.noPaquete);
+      this.$router.push('/formato');
+    },
     goCapturar() {
       localStorage.setItem("noPaquete", this.noPaquete);
       this.$router.push("/capturar");
