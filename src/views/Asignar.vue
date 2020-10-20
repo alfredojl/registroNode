@@ -146,6 +146,9 @@
               >Asignar</b-button
             >
             <b-button variant="info" class="col-auto mt-2" @click="limpiar()">Limpiar</b-button>
+            <b-button class="col-auto mt-3 mb-5" variant="outline-secondary" @click="goFormato()" right
+              >Formato</b-button
+            >
           </b-button-group>
         </div>
       </div>
@@ -190,6 +193,10 @@ export default {
     this.getPreparadores();
   },
   methods: {
+    goFormato(){
+      localStorage.setItem("noPaquete", this.noPaquete);
+      this.$router.push('/formato');
+    },
     limpiar(){
       this.noFojas = null;
       this.estado = null;

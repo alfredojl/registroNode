@@ -227,7 +227,9 @@ Preparador: ${this.preparador}`,)
         //         .slice(0, 10)
         //     : null;
         this.fechaExpediente = new Date(res.data.paquete.fechaExpediente);
-        this.fechaExpediente = this.fechaExpediente.getDate() + '/' + this.fechaExpediente.getMonth() + '/' + this.fechaExpediente.getFullYear();
+        let dia = this.fechaExpediente.getDate() + 1;
+        let mes = this.fechaExpediente.getMonth() + 1;
+        this.fechaExpediente = dia + '/' + mes + '/' + this.fechaExpediente.getFullYear();
         this.qr();
         })
         .catch((error) => {
