@@ -43,7 +43,6 @@ app.post('/preparadores', async(req, res) => {
         verificador
     })
 
-    console.log(typeof verificador, verificador);
     Preparador.create({
         name,
         verificador

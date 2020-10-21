@@ -71,8 +71,6 @@ app.post('/paquete', (req, res) => {
 app.put('/paquete', (req, res) => {
     let body = req.body;
 
-    console.log(body);
-
     Paquete.findOneAndUpdate({ noPaquete: body.noPaquete }, body, { new: true }, (err, paqueteDB) => {
         if (err) {
             return res.status(500).json({
