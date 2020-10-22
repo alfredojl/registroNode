@@ -8,17 +8,14 @@ let paqueteSchema = new Schema({
     noPaquete: {
         type: Number,
         required: [true, 'Paquete es necesario'],
-        unique: true
     },
     folioInicio: {
         type: Number,
         required: true,
-        unique: true
     },
     folioFin: {
         type: Number,
         required: true,
-        unique: true
     },
     turno: {
         type: String,
@@ -31,9 +28,15 @@ let paqueteSchema = new Schema({
     },
     fechaExpediente: {
         type: Date,
-        required: true
     },
     noFojas: {
+        type: Number
+    },
+    bis: {
+        type: Boolean,
+        default: false
+    },
+    identificador: {
         type: Number
     },
     fechaAlta: {
