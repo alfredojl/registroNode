@@ -61,14 +61,15 @@ app.post('/paquete', async(req, res) => {
 })
 
 app.put('/paquete', async(req, res) => {
-    let noPaquete = req.body.data.noPaquete;
-    let folioInicio = req.body.data.folioInicio;
-    let folioFin = req.body.data.folioFin;
-    let fechaExpediente = req.body.data.fechaExpediente;
-    let registrado = req.body.data.registrado;
-    let oldNoPaquete = req.body.data.oldNoPaquete;
 
-    console.log(folioInicio, folioFin)
+    console.log(req.body);
+    let noPaquete = req.body.noPaquete;
+    let folioInicio = req.body.folioInicio;
+    let folioFin = req.body.folioFin;
+    let fechaExpediente = req.body.fechaExpediente;
+    let registrado = req.body.registrado;
+    let oldNoPaquete = req.body.oldNoPaquete || req.body.noPaquete;
+
     await Paquete.updateOne({ noPaquete: oldNoPaquete }, {
         noPaquete,
         folioInicio,
