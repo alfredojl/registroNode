@@ -151,7 +151,7 @@
     <div class="mb-5"></div>
     <div class="mt-5"></div>
     <div class="row">
-      <div class="col-4"></div>
+      <div class="col-9 mt-5"></div>
       <img :src="qrvue" alt="" class="bottom-qr" />
     </div>
   </div>
@@ -255,6 +255,7 @@ Preparador: ${this.preparador}`
   width: 200px;
   height: 200px;
   border: 1px solid black;
+  margin-top: 15rem;
 }
 .mydiv {
   width: 150px;
