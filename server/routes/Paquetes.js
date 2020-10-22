@@ -62,7 +62,6 @@ app.post('/paquete', async(req, res) => {
 
 app.put('/paquete', async(req, res) => {
 
-    console.log(req.body);
     let noPaquete = req.body.noPaquete;
     let folioInicio = req.body.folioInicio;
     let folioFin = req.body.folioFin;
