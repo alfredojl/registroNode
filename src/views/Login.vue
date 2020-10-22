@@ -14,6 +14,7 @@
         >
             <input
                 type="email"
+                autofocus
                 v-on:keyup.enter="onLogin()"
                 @click="error = false"
                 v-model="name"

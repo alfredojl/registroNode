@@ -10,29 +10,29 @@
         <th><pre></pre></th>
       </tr>
     </table> -->
-<div class="row mt-5">
-<div class="col-9">
-    <h6 class="mt-3">Fecha: {{fechaToday}}</h6>
-    <h6>Verificador: {{verificador}}</h6>
-    <h6>Turno: {{turno}}</h6>
-</div>
-<div class="col-auto">
-    <!-- <div class="mydiv ml-auto"> -->
+    <div class="row mt-5">
+      <div class="col-9">
+        <h6 class="mt-3">Fecha: {{ fechaToday }}</h6>
+        <h6>Verificador: {{ verificador }}</h6>
+        <h6>Turno: {{ turno }}</h6>
+      </div>
+      <div class="col-auto">
+        <!-- <div class="mydiv ml-auto"> -->
         <!-- <canvas id="canvas"></canvas> -->
-        <img :src="qrvue" alt="" class="mydiv">
-    <!-- </div> -->
-</div>
-
-</div>
+        <img :src="qrvue" alt="" class="mydiv" />
+        <!-- </div> -->
+      </div>
+    </div>
 
     <br />
     <table class="l" style="width: 90%">
       <tr>
-        <th class="renglon">Nombre del preparador: </th>
+        <th class="renglon">Nombre del preparador:</th>
         <th class="renglon">{{ preparador }}</th>
         <th class="l">Verificador</th>
         <th class="checkes"></th>
-        <th class="l">Digitalizador</th></tr>
+        <th class="l">Digitalizador</th>
+      </tr>
       <tr>
         <td class="l">Paquete</td>
         <td class="l">{{ noPaquete }}</td>
@@ -149,65 +149,71 @@
       <td class="cuadros"></td>
     </table>
     <div class="mb-5"></div>
+    <div class="mt-5"></div>
+    <div class="row">
+      <div class="col-4"></div>
+      <img :src="qrvue" alt="" class="bottom-qr" />
+    </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-import config from '../config/config';
-import QR from 'qrcode';
+import axios from "axios";
+import config from "../config/config";
+import QR from "qrcode";
 
 export default {
-    data() {
-        return {
-            noPaquete: null,
-            preparador: null,
-            verificador: null,
-            folioInicio: null,
-            folioFin: null,
-            turno: null,
-            fechaToday: null,
-            fechaExpediente: null,
-            qrvue: null
-        }
-    },
-    created() {
-        let date = new Date();
-        let mes = date.getMonth() + 1;
-        this.fechaToday = date.getDate() + '/' + mes + '/' + date.getFullYear();
-        this.search();
-    },
-    methods: {
-        qr(){
-
-            // let data = {
-            //     '': this.noPaquete,
-            //     "Folio inicio:": this.folioInicio,
-            //     'Folio fin: ': this.folioFin,
-            //     'Fecha expediente: ': this.fechaExpediente,
-            //     'Verificador: ': this.verificador
-            // }
-        QR.toDataURL(`${this.noPaquete} 
+  data() {
+    return {
+      noPaquete: null,
+      preparador: null,
+      verificador: null,
+      folioInicio: null,
+      folioFin: null,
+      turno: null,
+      fechaToday: null,
+      fechaExpediente: null,
+      qrvue: null,
+    };
+  },
+  created() {
+    let date = new Date();
+    let mes = date.getMonth() + 1;
+    this.fechaToday = date.getDate() + "/" + mes + "/" + date.getFullYear();
+    this.search();
+  },
+  methods: {
+    qr() {
+      // let data = {
+      //     '': this.noPaquete,
+      //     "Folio inicio:": this.folioInicio,
+      //     'Folio fin: ': this.folioFin,
+      //     'Fecha expediente: ': this.fechaExpediente,
+      //     'Verificador: ': this.verificador
+      // }
+      QR.toDataURL(
+        `${this.noPaquete} 
 Folio inicio: ${this.folioInicio}
 Folio fin: ${this.folioFin}
 Fecha expediente: ${this.fechaExpediente}
 Verificador: ${this.verificador}
-Preparador: ${this.preparador}`,)
-// console.log(data);
-// QR.toDataURL(data)
-        .then(url => {
-            this.qrvue = url;
+Preparador: ${this.preparador}`
+      )
+        // console.log(data);
+        // QR.toDataURL(data)
+        .then((url) => {
+          this.qrvue = url;
         })
-        .catch(err => {
-            console.log(err);
-        })
-        },
-        search(){
-            this.noPaquete = localStorage.noPaquete;
-            axios
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    search() {
+      this.noPaquete = localStorage.noPaquete;
+      axios
         .get(`${config.api}/paquete`, {
           params: {
-            noPaquete: this.noPaquete
+            noPaquete: this.noPaquete,
           },
         })
         .then((res) => {
@@ -222,43 +228,49 @@ Preparador: ${this.preparador}`,)
           this.verificador = res.data.paquete.verificador;
           this.preparador = res.data.paquete.preparador;
           this.turno = res.data.paquete.turno;
-        //   this.fechaExpediente = res.data.paquete.fechaExpediente
-        //     ? new Date(res.data.paquete.fechaExpediente)
-        //         .toISOString()
-        //         .slice(0, 10)
-        //     : null;
-        this.fechaExpediente = new Date(res.data.paquete.fechaExpediente);
-        let dia = this.fechaExpediente.getDate() + 1;
-        let mes = this.fechaExpediente.getMonth() + 1;
-        this.fechaExpediente = dia + '/' + mes + '/' + this.fechaExpediente.getFullYear();
-        this.qr();
+          //   this.fechaExpediente = res.data.paquete.fechaExpediente
+          //     ? new Date(res.data.paquete.fechaExpediente)
+          //         .toISOString()
+          //         .slice(0, 10)
+          //     : null;
+          this.fechaExpediente = new Date(res.data.paquete.fechaExpediente);
+          let dia = this.fechaExpediente.getDate() + 1;
+          let mes = this.fechaExpediente.getMonth() + 1;
+          this.fechaExpediente =
+            dia + "/" + mes + "/" + this.fechaExpediente.getFullYear();
+          this.qr();
         })
         .catch((error) => {
           if (error) {
             console.log(error);
           }
         });
-    }
     },
-}
+  },
+};
 </script>
 
 <style>
-.mydiv{
-    width: 150px;
-    height: 150px;
-    border: 2px solid black;
+.bottom-qr{
+  width: 200px;
+  height: 200px;
+  border: 1px solid black;
 }
-.renglon{
-    width: 15rem;
+.mydiv {
+  width: 150px;
+  height: 150px;
+  border: 2px solid black;
 }
-.cuadros{
-    width: 2rem;
-    border: 1px solid black;
+.renglon {
+  width: 15rem;
 }
-.checkes{
-    width: 3rem;
-    height: 10px;
+.cuadros {
+  width: 2rem;
+  border: 1px solid black;
+}
+.checkes {
+  width: 3rem;
+  height: 10px;
 }
 table.l,
 th.l,

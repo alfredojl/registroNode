@@ -6,7 +6,10 @@
         <b-input-group prepend="Paquete" class="mb-5">
           <b-form-input
             type="number"
+            autofocus
             v-model="noPaquete"
+            maxlength="5"
+            :state="valida"
             v-on:keyup.enter="search()"
           ></b-form-input>
           <b-input-group-prepend>
@@ -15,7 +18,7 @@
         </b-input-group>
       </div>
     </div>
-    <div class="row mt-5">
+    <div class="row mkeyt-5">
       <div class="col-3"></div>
       <div class="col-6 p-0 d-flex">
         <b-input-group prepend="Folio inicio" class="">
@@ -143,7 +146,7 @@
     <div class="">
       <div class="row align-content-between">
         <div class="col-3"></div>
-        <div class="beetween">
+        <div class="">
           <b-button-group size="sm">
             <b-button
               @click="goValidar()"
@@ -154,8 +157,8 @@
             <b-button
               class="col-auto mt-3 mb-5"
               variant="outline-primary"
-              @click="goAsignar()"
-              >Asignar preparador</b-button
+              @click="goEditar()"
+              >Editar</b-button
             >
             <b-button
               class="col-auto mt-3 mb-5"
@@ -168,9 +171,9 @@
               variant="outline-primary"
               right
               @click="goAsignar()"
-              >Asignar digitalizador</b-button
+              >Asignar</b-button
             >
-            <b-button class="col-auto mt-3 mb-5" variant="outline-secondary" @click="goFormato()" right
+            <b-button class="col-auto mt-3 mb-5" variant="warning" @click="goFormato()" right
               >Formato</b-button
             >
           </b-button-group>
@@ -188,7 +191,7 @@ import config from "../config/config";
 export default {
   data() {
     return {
-      noPaquete: null,
+      noPaquete: '',
       paquete: null,
       folioInicio: null,
       folioFin: null,
@@ -205,7 +208,19 @@ export default {
     };
   },
   created() {},
+  computed: {
+    valida(){
+      if(this.noPaquete.length > 5){
+        this.noPaquete = this.noPaquete.slice(0,5);
+        return false
+      }
+    }
+  },
   methods: {
+    goEditar(){
+      localStorage.setItem("noPaquete", this.noPaquete);
+      this.$router.push('/editar');
+    },
     goFormato(){
       localStorage.setItem("noPaquete", this.noPaquete);
       this.$router.push('/formato');

@@ -7,6 +7,7 @@ import Registrar from "../views/Registrar.vue";
 import Asignar from "../views/Asignar.vue";
 import Capturar from "../views/Capturar.vue";
 import Formato from "../views/Formato.vue";
+import Editar from "../views/Editar.vue";
 // import CrearUsuario from "../views/CrearUsuario.vue";
 
 Vue.use(VueRouter);
@@ -87,6 +88,15 @@ const routes = [{
             else next(false);
         },
     },
+    {
+        path: '/editar',
+        name: 'Editar',
+        component: Editar,
+        beforeEnter: (to, from, next) => {
+            if (isAuthenticated()) next();
+            else next(false);
+        },
+    },
 ];
 
 const isAuthenticated = () => {
@@ -94,7 +104,7 @@ const isAuthenticated = () => {
 };
 
 const router = new VueRouter({
-    mode: 'history',
+    // mode: 'history',
     routes,
 });
 

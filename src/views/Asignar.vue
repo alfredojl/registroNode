@@ -312,12 +312,12 @@ export default {
       )
         return Swal.fire("Seleccione un paquete.", "", "info");
       else
+        if(!this.preparador)
+          return Swal.fire("Seleccione un preparador.", "", "info");
         Swal.fire({
         title: `¿Asignar a ${this.preparador}?`,
-        showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: `Asignar`,
-        denyButtonText: `No asignar`,
         cancelButtonText: "Cancelar",
       }).then((result) => {
         if (result.isConfirmed) {

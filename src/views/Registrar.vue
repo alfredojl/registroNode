@@ -4,12 +4,12 @@
       <div class="col-3"></div>
       <div class="col-6 p-0 d-flex">
         <b-input-group prepend="Paquete" class="">
-          <b-form-input type="number" v-model="noPaquete"
+          <b-form-input type="number" autofocus v-model="noPaquete"
         v-on:keyup.enter="save()"></b-form-input>
         </b-input-group>
       </div>
     </div>
-    <div class="row">
+    <div class="row mt-3">
       <div class="col-3"></div>
       <div class="col-6 p-0 d-flex">
         <b-input-group prepend="Folio inicio" class="">
@@ -18,7 +18,7 @@
         </b-input-group>
       </div>
     </div>
-    <div class="row">
+    <div class="row mt-3">
       <div class="col-3"></div>
       <div class="col-6 p-0 d-flex">
         <b-input-group prepend="Folio fin" class="">
@@ -27,7 +27,7 @@
         </b-input-group>
       </div>
     </div>
-    <div class="row">
+    <div class="row mt-3">
       <div class="col-3"></div>
       <div class="col-6 p-0 d-flex">
         <b-input-group prepend="Fecha de expediente" class="">
@@ -35,6 +35,19 @@
         v-on:keyup.enter="save()"></b-form-input>
         </b-input-group>
       </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-3"></div>
+      <b-form-checkbox
+      class="mr-auto"
+      id="checkbox-1"
+      v-model="bis"
+      name="checkbox-1"
+      value="true"
+      unchecked-value="false"
+    >
+      BIS
+    </b-form-checkbox>
     </div>
     <div class="row mt-3">
       <div class="col-3"></div>
@@ -72,6 +85,7 @@ export default {
             fechaExpediente: null,
             noFojas: null,
             fechaAlta: null,
+            bis: false,
             estado: null,
     };
     },
@@ -93,28 +107,35 @@ export default {
         this.digitalizador = null;
       },
         save(){
-          if(!this.noPaquete || !this.folioInicio || !this.folioFin || !this.fechaExpediente)
-            return Swal.fire(`Complete todos los campos.`, ``, "info");
+          // if(!this.noPaquete || !this.folioInicio || !this.folioFin || !this.fechaExpediente)
+          //   return Swal.fire(`Complete todos los campos.`, ``, "info");
           let fechaAlta = Date.now();
           let data = {
             noPaquete: this.noPaquete,
             folioInicio: this.folioInicio,
             folioFin: this.folioFin,
-            digitalizador: this.digitalizador,
             fechaExpediente: this.fechaExpediente,
             fechaAlta,
+            bis: this.bis,
             registrado: localStorage.loggedIn
           };
           axios.post(`${config.api}/paquete`, {
             data
           })
           .then((res) => {
-            this.paquete = res.data.paquete.noPaquete;
-            Swal.fire(`¡Hecho!`, `Paquete ${this.paquete} agregado con éxito.`, "success");
-            
+            console.log(this.noPaquete);
+          if (!res.data.exist)
+            return Swal.fire({title:`¡Hecho!`,
+            position: 'top-end',
+            text: `Paquete ${this.noPaquete} agregado con éxito.`,
+            icon: "success",
+            timer: 1500});
+          Swal.fire(`Paquete existente`, `El paquete ${this.noPaquete} ya fue creado anteriormente. Intente buscarlo.`, "info");
+          console.log(res);
+          console.log(this.noPaquete);
           }).catch((err) => {
-            Swal.fire(`Error!`, `No se pudo agregar el paquete ${this.paquete}`, "error");
-            console.log(err);
+            Swal.fire(`Error!`, `No se pudo agregar el paquete.`, "error");
+            console.log(err.response);
           });
         }
     },

@@ -6,6 +6,7 @@
         <b-input-group prepend="Paquete" class="mb-5">
           <b-form-input
             type="number"
+            autofocus
             v-model="noPaquete"
             v-on:keyup.enter="search()"
           ></b-form-input>
