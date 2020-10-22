@@ -8,7 +8,8 @@ let Schema = mongoose.Schema;
 let foliosSchema = new Schema({
     folio: {
         type: Number,
-        required: true
+        required: true,
+        unique: false
     },
     tomos: {
         type: Number
