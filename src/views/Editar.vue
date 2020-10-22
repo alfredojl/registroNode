@@ -63,6 +63,7 @@
         <b-button variant="danger" @click="eliminar()">Eliminar</b-button>
       </b-button-group>
     </div>
+    <pre>{{folioInicio}}</pre>
   </div>
 </template>
 
@@ -162,16 +163,21 @@ export default {
     save() {
       let oldNoPaquete = localStorage.noPaquete;
       let data = {
-        noPaquete: this.noPaquete,
-        oldNoPaquete,
-        folioInicio: this.folioInicio,
-        folioFin: this.folioFin,
-        registrado: localStorage.loggedIn,
-        fechaExpediente: this.fechaExpediente,
+        
+        
+        
+        
+        
+        
       };
       axios
         .put(`${config.api}/paquete`, {
-          data,
+          noPaquete: this.noPaquete,
+          oldNoPaquete,
+          folioInicio: this.folioInicio,
+          folioFin: this.folioFin,
+          registrado: localStorage.loggedIn,
+          fechaExpediente: this.fechaExpediente,
         })
         .then((res) => {
           Swal.fire(
@@ -181,9 +187,10 @@ export default {
           );
         })
         .catch((err) => {
+          console.log(err.response);
           Swal.fire(
             `Error!`,
-            `No se pudo actualizar el paquete ${this.paquete}`,
+            `No se pudo actualizar el paquete.`,
             "error"
           );
         });

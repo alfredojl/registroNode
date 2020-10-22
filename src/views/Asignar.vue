@@ -324,6 +324,9 @@ export default {
           axios.put(`${config.api}/paquete`, {
             verificador: this.verificador,
             preparador: this.preparador,
+            folioInicio: this.folioInicio,
+            folioFin: this.folioFin,
+            fechaExpediente: this.fechaExpediente,
             digitalizador: this.digitalizador,
             estado: this.estado,
             turno: this.turno,
