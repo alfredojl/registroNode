@@ -35,10 +35,28 @@ app.post('/paquete', async(req, res) => {
             })
         }
 
-        res.json({
+        let folios = [];
+        for (let i = folioInicio; i <= folioFin; i++) {
+            let folio = {
+                folio: i,
+                noPaquete: noPaquete
+            }
+            folios.push(folio);
+        };
+
+        await Folio.insertMany(folios, (err, resultado) => {
+            if (err) {
+                Paquete.remove({ noPaquete });
+                return res.status(500).json({
+                    ok: false,
+                    err
+                });
+            }
+        })
+        return res.json({
             ok: true,
             paquete: paqueteDB
-        })
+        });
     })
 })
 
