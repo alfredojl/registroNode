@@ -269,7 +269,6 @@ export default {
       this.$router.push("/validar");
     },
     search() {
-      this.temp = this.noPaquete.slice(0,4)
       if (!this.noPaquete)
         return Swal.fire("Ingresa un número de paquete", "", "info");
       axios
@@ -312,7 +311,6 @@ export default {
             console.log(error);
           }
         });
-      this.noPaquete = this.temp;  
     },
   },
 };
