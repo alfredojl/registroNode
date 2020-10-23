@@ -28,14 +28,14 @@
     <table class="l" style="width: 90%">
       <tr>
         <th class="renglon">Nombre del preparador:</th>
-        <th class="renglon">{{ preparador }} {{ identificador }}/{{ cantidad }}</th>
+        <th class="renglon">{{ preparador }}</th>
         <th class="l">Verificador</th>
         <th class="checkes"></th>
         <th class="l">Digitalizador</th>
       </tr>
       <tr>
         <td class="l">Paquete</td>
-        <td class="l">{{ noPaquete }}</td>
+        <td class="l">{{ noPaquete }} {{ identificador }}/{{ cantidad }}</td>
         <td class="l">Registro de datos</td>
         <td class="l"></td>
         <td class="l"></td>
