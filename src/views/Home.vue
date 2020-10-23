@@ -3,7 +3,7 @@
     <div class="row mt-5">
       <div class="col-3"></div>
       <div class="col-6 p-0 d-flex">
-        <b-input-group prepend="Paquete" class="mb-5">
+        <b-input-group prepend="Paquete" class="">
           <b-form-input
             type="number"
             autofocus
@@ -17,6 +17,33 @@
           </b-input-group-prepend>
         </b-input-group>
       </div>
+    </div>
+    <div v-show="cantidad">
+      <div class="row mt-1">
+      <div class="col-3"></div>
+      <div class="col-3 p-0 d-flex">
+        <b-input-group prepend="Número" class="mb-5">
+          <b-form-input
+            type="number"
+            class="col-2"
+            v-model="identificador"
+            disabled
+          ></b-form-input>
+          <b-form-input
+            type="text"
+            class="col-2"
+            value="de"
+            disabled
+          ></b-form-input>
+          <b-form-input
+            type="number"
+            class="col-2"
+            v-model="cantidad"
+            disabled
+          ></b-form-input>
+        </b-input-group>
+      </div>
+    </div>
     </div>
     <div class="row mkeyt-5">
       <div class="col-3"></div>
@@ -192,12 +219,15 @@ export default {
   data() {
     return {
       noPaquete: '',
+      temp: null,
       paquete: null,
       folioInicio: null,
       folioFin: null,
       fechaExpediente: null,
       noFojas: null,
       fechaAlta: null,
+      identificador: null,
+      cantidad: null,
       estado: null,
       registrador: null,
       validador: null,
@@ -240,6 +270,7 @@ export default {
       this.$router.push("/validar");
     },
     search() {
+      this.temp = this.noPaquete.slice(0,4)
       if (!this.noPaquete)
         return Swal.fire("Ingresa un número de paquete", "", "info");
       axios
@@ -261,6 +292,8 @@ export default {
           this.folioFin = res.data.paquete.folioFin;
           this.noFojas = res.data.paquete.noFojas;
           this.fechaAlta = res.data.paquete.fechaAlta;
+          this.identificador = res.data.paquete.identificador;
+          this.cantidad = res.data.paquete.cantidad;
           this.estado = res.data.paquete.estado;
           this.verificador = res.data.paquete.verificador;
           this.observaciones = res.data.paquete.observaciones;
@@ -280,6 +313,7 @@ export default {
             console.log(error);
           }
         });
+      this.noPaquete = this.temp;  
     },
   },
 };

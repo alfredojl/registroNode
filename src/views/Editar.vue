@@ -63,7 +63,6 @@
         <b-button variant="danger" @click="eliminar()">Eliminar</b-button>
       </b-button-group>
     </div>
-    <pre>{{folioInicio}}</pre>
   </div>
 </template>
 
