@@ -241,7 +241,6 @@ export default {
   computed: {
     valida(){
       if(this.noPaquete.length > 5){
-        this.noPaquete = this.noPaquete.slice(0,5);
         return false
       }
     }
