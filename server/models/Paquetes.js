@@ -39,6 +39,9 @@ let paqueteSchema = new Schema({
     identificador: {
         type: Number
     },
+    cantidad: {
+        type: Number
+    },
     fechaAlta: {
         type: Date
     },
