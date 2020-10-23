@@ -9,6 +9,7 @@ let foliosSchema = new Schema({
     folio: {
         type: Number,
         required: true,
+        unique: false
     },
     tomos: {
         type: Number

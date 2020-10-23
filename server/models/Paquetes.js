@@ -12,10 +12,12 @@ let paqueteSchema = new Schema({
     folioInicio: {
         type: Number,
         required: true,
+        unique: false
     },
     folioFin: {
         type: Number,
         required: true,
+        unique: false
     },
     turno: {
         type: String,
