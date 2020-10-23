@@ -28,7 +28,7 @@
     <table class="l" style="width: 90%">
       <tr>
         <th class="renglon">Nombre del preparador:</th>
-        <th class="renglon">{{ preparador }}</th>
+        <th class="renglon">{{ preparador }} {{ identificador }}/{{ cantidad }}</th>
         <th class="l">Verificador</th>
         <th class="checkes"></th>
         <th class="l">Digitalizador</th>
@@ -227,6 +227,8 @@ Preparador: ${this.preparador}`
           this.folioFin = res.data.paquete.folioFin;
           this.verificador = res.data.paquete.verificador;
           this.preparador = res.data.paquete.preparador;
+          this.cantidad = res.data.paquete.cantidad;
+          this.identificador = res.data.paquete.identificador;
           this.turno = res.data.paquete.turno;
           //   this.fechaExpediente = res.data.paquete.fechaExpediente
           //     ? new Date(res.data.paquete.fechaExpediente)
