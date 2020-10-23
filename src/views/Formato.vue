@@ -170,6 +170,8 @@ export default {
       verificador: null,
       folioInicio: null,
       folioFin: null,
+      cantidad: null,
+      identificador: null,
       turno: null,
       fechaToday: null,
       fechaExpediente: null,
